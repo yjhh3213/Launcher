@@ -14,6 +14,11 @@ public class book : MonoBehaviour
 
     [SerializeField] List<GameObject> GameList;
 
+    [Header("사운드 설정")]
+    [Tooltip("소리를 출력할 AudioSource를 넣어주세요")]
+    [SerializeField] AudioSource audioSource;
+    [Tooltip("책장을 넘길 때 날 소리(음원 파일)를 넣어주세요")]
+    [SerializeField] AudioClip buttonSound;
     private void Start()
     {
         InitialState();
@@ -36,6 +41,10 @@ public class book : MonoBehaviour
     public void RotateForward()
     {
         if (rotate == true) { return; }
+        if (audioSource != null && buttonSound != null)
+        {
+            audioSource.PlayOneShot(buttonSound);
+        }
         index++;
         float angle = 180; //in order to rotate the page forward, you need to set the rotation by 180 degrees around the y axis
         ForwardButtonActions();
@@ -76,6 +85,10 @@ public class book : MonoBehaviour
     public void RotateBack()
     {
         if (rotate == true) { return; }
+        if (audioSource != null && buttonSound != null)
+        {
+            audioSource.PlayOneShot(buttonSound);
+        }
         float angle = 0; //in order to rotate the page back, you need to set the rotation to 0 degrees around the y axis
         pages[index].SetAsLastSibling();
         BackButtonActions();
